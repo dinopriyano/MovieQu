@@ -3,7 +3,7 @@ package com.dupat.newsqu.di
 import android.app.Application
 import androidx.room.Room
 import com.dupat.newsqu.data.local.room.NewsDatabase
-import com.dupat.newsqu.data.remote.ApiService
+import com.dupat.newsqu.data.remote.network.ApiService
 import com.dupat.newsqu.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -21,7 +21,7 @@ class MovieModule {
 
     @Singleton
     @Provides
-    fun provideRetrofitInstance() : ApiService{
+    fun provideRetrofitInstance() : ApiService {
         return return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
