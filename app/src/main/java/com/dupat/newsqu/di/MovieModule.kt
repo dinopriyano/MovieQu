@@ -1,11 +1,16 @@
 package com.dupat.newsqu.di
 
+import android.app.Application
+import androidx.room.Room
+import com.dupat.newsqu.data.local.room.NewsDatabase
 import com.dupat.newsqu.data.remote.ApiService
 import com.dupat.newsqu.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -22,6 +27,24 @@ class MovieModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideNoteDatabase(app: Application): NewsDatabase{
+        val passphrase = SQLiteDatabase.getBytes(
+            "dupat.id".toCharArray()
+        )
+        val factory = SupportFactory(passphrase)
+
+        return Room.databaseBuilder(
+            app,
+            NewsDatabase::class.java,
+            "notes"
+        )
+            .fallbackToDestructiveMigration()
+            .openHelperFactory(factory)
+            .build()
     }
 
 }
