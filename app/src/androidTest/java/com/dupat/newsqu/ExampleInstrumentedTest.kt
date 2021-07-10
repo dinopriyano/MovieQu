@@ -1,4 +1,4 @@
-package com.dupat.moviequ
+package com.dupat.newsqu
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

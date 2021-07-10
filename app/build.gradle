@@ -12,7 +12,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.dupat.moviequ"
+        applicationId "com.dupat.newsqu"
         minSdkVersion 22
         targetSdkVersion 30
         versionCode 1

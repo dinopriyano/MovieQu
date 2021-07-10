@@ -1,4 +1,4 @@
-package com.dupat.moviequ
+package com.dupat.newsqu
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

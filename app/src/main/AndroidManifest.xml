@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dupat.moviequ">
+    package="com.dupat.newsqu">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
-        android:name=".BaseApplication"
+        android:name="com.dupat.newsqu.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MovieQu">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name="com.dupat.newsqu.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

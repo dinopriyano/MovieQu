@@ -1,4 +1,4 @@
-package com.dupat.moviequ
+package com.dupat.newsqu
 
 import org.junit.Test
 
