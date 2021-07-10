@@ -1,18 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/primary_dark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        app:elevation="0dp"
+        android:background="@color/primary_dark"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                app:title="@string/title"
+                app:titleTextColor="@color/white"
+                android:layout_height="wrap_content"/>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                app:riv_corner_radius="17dp"
+                android:src="@color/white"
+                android:layout_marginRight="15dp"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.tistory.zladnrms.roundablelayout.RoundableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:backgroundColor="@color/secondary_dark"
+        app:cornerRightTop="30dp"
+        app:cornerLeftTop="30dp">
+
+
+
+    </com.tistory.zladnrms.roundablelayout.RoundableLayout>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/primary_dark"
+        app:fabCradleMargin="15dp"
+        app:fabCradleVerticalOffset="5dp"
+        app:hideOnScroll="true"
+        app:fabCradleRoundedCornerRadius="20dp"
+        android:layout_gravity="bottom">
+        
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigation_bottom"
+            android:paddingVertical="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemRippleColor="@null"
+            style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+            app:labelVisibilityMode="unlabeled"
+            android:background="@android:color/transparent"
+            app:menu="@menu/bottom_nav_menu"/>
+        
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/ic_bookmark"
+        app:tint="@color/white"
+        app:backgroundTint="#5697E7"
+        app:layout_anchor="@id/bottomAppBar" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
