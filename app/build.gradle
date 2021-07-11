@@ -85,11 +85,17 @@ dependencies {
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
+    //glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+
     //rounded image view
     implementation "com.makeramen:roundedimageview:$rounded_iv_version"
 
     //roundable layout
     implementation "com.github.zladnrms:RoundableLayout:$roundable_version"
+
+    //time ago
+    implementation "com.github.marlonlom:timeago:$time_ago_version"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

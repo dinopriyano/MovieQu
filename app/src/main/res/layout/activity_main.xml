@@ -39,16 +39,13 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.tistory.zladnrms.roundablelayout.RoundableLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:backgroundColor="@color/secondary_dark"
         app:cornerRightTop="30dp"
-        app:cornerLeftTop="30dp">
-
-
-
-    </com.tistory.zladnrms.roundablelayout.RoundableLayout>
+        app:cornerLeftTop="30dp"/>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.dupat.newsqu.data.local.room.NewsDatabase
 import com.dupat.newsqu.data.remote.network.ApiService
+import com.dupat.newsqu.data.repositories.NewsRepository
 import com.dupat.newsqu.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -31,7 +32,7 @@ class MovieModule {
 
     @Singleton
     @Provides
-    fun provideNoteDatabase(app: Application): NewsDatabase{
+    fun provideNewsDatabase(app: Application): NewsDatabase{
         val passphrase = SQLiteDatabase.getBytes(
             "dupat.id".toCharArray()
         )
@@ -45,6 +46,12 @@ class MovieModule {
             .fallbackToDestructiveMigration()
             .openHelperFactory(factory)
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideNewsRepository(apiService: ApiService) : NewsRepository{
+        return NewsRepository(apiService)
     }
 
 }

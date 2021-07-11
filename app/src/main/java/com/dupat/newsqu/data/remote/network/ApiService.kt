@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("top-headlines")
-    suspend fun getPopularMovies(
+    suspend fun getPopularNews(
         @Query("apiKey") apiKey: String = Constants.API_KEY,
         @Query("country") country: String,
         @Query("page") page: Int,
@@ -17,7 +17,7 @@ interface ApiService {
     ) : ApiResponse<Article>
 
     @GET("everything")
-    suspend fun getSearchMovies(
+    suspend fun getSearchNews(
         @Query("apiKey") apiKey: String = Constants.API_KEY,
         @Query("q") query: String,
         @Query("page") page: Int,
