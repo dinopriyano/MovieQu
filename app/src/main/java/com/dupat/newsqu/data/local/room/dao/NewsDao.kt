@@ -16,7 +16,4 @@ interface NewsDao {
     @Query("SELECT * FROM article")
     fun getAllNews() : PagingSource<Int, ArticleEntity>
 
-    @Query("SELECT * FROM article WHERE title LIKE '%' || :keyword || '%' OR description LIKE '%' || :keyword || '%' OR content LIKE '%' || :keyword || '%' OR author LIKE '%' || :keyword || '%'")
-    fun searchNews(keyword: String) : PagingSource<Int, ArticleEntity>
-
 }

@@ -23,7 +23,7 @@ class MovieModule {
     @Singleton
     @Provides
     fun provideRetrofitInstance() : ApiService {
-        return return Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -33,16 +33,10 @@ class MovieModule {
     @Singleton
     @Provides
     fun provideNewsDatabase(app: Application): NewsDatabase{
-        val passphrase = SQLiteDatabase.getBytes(
-            "dupat.id".toCharArray()
-        )
+        val passphrase = SQLiteDatabase.getBytes("dupatid".toCharArray())
         val factory = SupportFactory(passphrase)
 
-        return Room.databaseBuilder(
-            app,
-            NewsDatabase::class.java,
-            "notes"
-        )
+        return Room.databaseBuilder(app, NewsDatabase::class.java, "news.db")
             .fallbackToDestructiveMigration()
             .openHelperFactory(factory)
             .build()
