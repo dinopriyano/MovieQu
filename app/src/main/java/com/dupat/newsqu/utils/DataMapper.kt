@@ -21,3 +21,34 @@ fun List<Article>.toArticleEntities() : List<ArticleEntity>{
 
     return entities
 }
+
+fun List<ArticleEntity>.toArticleResponse() : List<Article>{
+    val responsList = ArrayList<Article>()
+    this.map {
+        val response = Article(
+            it.author,
+            it.content,
+            it.description,
+            it.publishedAt ?: "",
+            it.title,
+            it.url,
+            it.urlToImage
+        )
+
+        responsList.add(response)
+    }
+
+    return responsList
+}
+
+fun ArticleEntity.toArticle() : Article {
+    return Article(
+        this.author,
+        this.content,
+        this.description,
+        this.publishedAt ?: "",
+        this.title,
+        this.url,
+        this.urlToImage
+    )
+}

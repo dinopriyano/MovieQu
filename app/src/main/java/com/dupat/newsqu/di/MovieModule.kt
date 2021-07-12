@@ -44,8 +44,8 @@ class MovieModule {
 
     @Singleton
     @Provides
-    fun provideNewsRepository(apiService: ApiService) : NewsRepository{
-        return NewsRepository(apiService)
+    fun provideNewsRepository(apiService: ApiService, newsDatabase: NewsDatabase) : NewsRepository{
+        return NewsRepository(apiService, newsDatabase.newsDao(), newsDatabase.remoteDao())
     }
 
 }
