@@ -8,10 +8,10 @@ import com.dupat.newsqu.data.local.entities.ArticleEntity
 interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllNews(data: List<ArticleEntity>)
+    suspend fun insertAllNews(data: List<ArticleEntity>)
 
     @Query("DELETE FROM article")
-    fun deleteAllNews()
+    suspend fun deleteAllNews()
 
     @Query("SELECT * FROM article")
     fun getAllNews() : PagingSource<Int, ArticleEntity>

@@ -12,7 +12,7 @@ class NewsRepository(private val apiService: ApiService) {
 
     fun getResult() : Flow<PagingData<Article>>{
         return Pager(
-            config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+            config = PagingConfig(pageSize = 20, prefetchDistance = 5, enablePlaceholders = false),
             pagingSourceFactory = {NewsPagingSource(apiService)}
         ).flow
     }

@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dupat.newsqu.R
 import com.dupat.newsqu.databinding.FragmentNewsBinding
@@ -41,6 +43,17 @@ class NewsFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.getPopNews().collectLatest { pageData ->
                 newsAdapter.submitData(pageData)
+            }
+        }
+
+        newsAdapter.addLoadStateListener { state ->
+            when(state.refresh){
+                is LoadState.Loading -> {
+                    Toast.makeText(requireContext(), "Loading data...", Toast.LENGTH_SHORT).show()
+                }
+                is LoadState.Error -> {
+                    Toast.makeText(requireContext(), "Ups, some error...", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

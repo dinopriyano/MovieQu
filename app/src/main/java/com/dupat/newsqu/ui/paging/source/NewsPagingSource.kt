@@ -9,6 +9,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class NewsPagingSource(val service: ApiService) : PagingSource<Int, Article>() {
+
     override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
         return state.anchorPosition?.let {
             val anchorPage = state.closestPageToPosition(it)
@@ -20,7 +21,7 @@ class NewsPagingSource(val service: ApiService) : PagingSource<Int, Article>() {
 
         return try{
             val page = params.key?:1
-            val response = service.getPopularNews(Constants.API_KEY, Constants.COUNTRY, page, 10)
+            val response = service.getPopularNews(Constants.API_KEY, Constants.COUNTRY, page, params.loadSize)
             val data = response.articles
             LoadResult.Page(
                 data = data,

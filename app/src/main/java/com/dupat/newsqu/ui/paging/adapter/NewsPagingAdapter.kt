@@ -19,7 +19,7 @@ import com.dupat.newsqu.utils.DiffUtils
 import com.dupat.newsqu.utils.toLocalDate
 import com.dupat.newsqu.utils.toTimeAgo
 
-class NewsPagingAdapter: PagingDataAdapter<Article, NewsPagingAdapter.ViewHolder>(DiffUtils) {
+class  NewsPagingAdapter: PagingDataAdapter<Article, NewsPagingAdapter.ViewHolder>(DiffUtils) {
 
     var onItemClick : ((Article) -> Unit)? = null
 

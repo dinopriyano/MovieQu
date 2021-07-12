@@ -33,6 +33,9 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        binding.navigationBottom.setOnItemReselectedListener {
+        }
     }
 
     private fun navigationChange(fragment: Fragment) {

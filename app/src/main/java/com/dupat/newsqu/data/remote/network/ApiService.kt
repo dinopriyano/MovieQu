@@ -10,7 +10,7 @@ interface ApiService {
 
     @GET("top-headlines")
     suspend fun getPopularNews(
-        @Query("apiKey") apiKey: String = Constants.API_KEY,
+        @Query("apiKey") apiKey: String,
         @Query("country") country: String,
         @Query("page") page: Int,
         @Query("pageSize") size: Int

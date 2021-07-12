@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class NewsViewModel @Inject constructor(private val newsRepository: NewsRepository): ViewModel() {
+class NewsViewModel @Inject constructor(private val repository : NewsRepository): ViewModel() {
 
-    val popularNews : Flow<PagingData<Article>> = newsRepository.getResult().cachedIn(viewModelScope)
+    val popularNews : Flow<PagingData<Article>> = repository.getResult().cachedIn(viewModelScope)
 
     fun getPopNews() = popularNews
 
