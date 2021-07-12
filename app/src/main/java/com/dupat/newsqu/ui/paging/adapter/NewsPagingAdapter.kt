@@ -4,6 +4,8 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +23,7 @@ import com.dupat.newsqu.utils.toTimeAgo
 
 class  NewsPagingAdapter: PagingDataAdapter<Article, NewsPagingAdapter.ViewHolder>(DiffUtils) {
 
-    var onItemClick : ((Article) -> Unit)? = null
+    var onItemClick : ((Article,ImageView) -> Unit)? = null
 
     override fun onBindViewHolder(holder: NewsPagingAdapter.ViewHolder, position: Int) {
         val article = getItem(position)
@@ -62,7 +64,8 @@ class  NewsPagingAdapter: PagingDataAdapter<Article, NewsPagingAdapter.ViewHolde
                     })
                     .error(ContextCompat.getDrawable(itemView.context, R.drawable.shape_gray))
                     .into(ivNews)
-                txtAuthor.text = article.author?:"Anonym"
+
+                txtAuthor.text = if(article.author.isNullOrEmpty()) "Anonym" else article.author
                 txtTitle.text = article.title
                 txtWriteTime.text = article.publishedAt.toLocalDate().toTimeAgo()
             }
@@ -71,7 +74,7 @@ class  NewsPagingAdapter: PagingDataAdapter<Article, NewsPagingAdapter.ViewHolde
         override fun onClick(v: View?) {
             when(v){
                 binding.container -> {
-                    onItemClick?.invoke(article)
+                    onItemClick?.invoke(article, binding.ivNews)
                 }
             }
         }

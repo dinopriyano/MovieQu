@@ -70,7 +70,7 @@
         android:id="@+id/fab_bookmark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_bookmark"
+        android:src="@drawable/ic_bookmark_filled"
         app:tint="@color/white"
         app:backgroundTint="@color/blue"
         app:layout_anchor="@id/bottomAppBar" />

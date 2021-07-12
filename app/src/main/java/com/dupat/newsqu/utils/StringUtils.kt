@@ -1,5 +1,6 @@
 package com.dupat.newsqu.utils
 
+import android.app.Activity
 import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.github.marlonlom.utilities.timeago.TimeAgoMessages
 import java.text.SimpleDateFormat
@@ -12,7 +13,21 @@ fun Date.toTimeAgo() : String{
     return TimeAgo.using(timeMilis, timeAgoMessage)
 }
 
+fun Date.toTimeDetail() : String{
+    val dateFormat = SimpleDateFormat("MMMM dd, yyyy HH:mm")
+    return dateFormat.format(this)
+}
+
 fun String.toLocalDate() : Date{
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     return dateFormat.parse(this)
+}
+
+fun Activity.statusBarHeight(): Int{
+    var result = 0
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+    if (resourceId > 0) {
+        result = resources.getDimensionPixelSize(resourceId)
+    }
+    return result
 }

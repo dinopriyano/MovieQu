@@ -1,17 +1,23 @@
 package com.dupat.newsqu.ui.fragment
 
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
+import android.util.Pair
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dupat.newsqu.R
 import com.dupat.newsqu.databinding.FragmentNewsBinding
+import com.dupat.newsqu.ui.DetailNewsActivity
 import com.dupat.newsqu.ui.paging.adapter.NewsPagingAdapter
 import com.dupat.newsqu.ui.viewmodel.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +33,6 @@ class NewsFragment : Fragment() {
     private val newsAdapter = NewsPagingAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentNewsBinding.inflate(inflater, container, false)
         return binding?.root
     }
@@ -37,6 +42,16 @@ class NewsFragment : Fragment() {
 
         initAdapter()
         loadData()
+
+        newsAdapter.onItemClick = { article, ivArticle ->
+            val intent = Intent(requireContext(), DetailNewsActivity::class.java)
+            intent.putExtra(DetailNewsActivity.NEWS_EXTRA, article)
+
+            val pairImageAticle = Pair.create<View, String>(ivArticle, resources.getString(R.string.transition_image_article))
+            val activityOptions = ActivityOptions.makeSceneTransitionAnimation(requireActivity(), pairImageAticle)
+
+            requireContext().startActivity(intent, activityOptions.toBundle())
+        }
     }
 
     private fun loadData() {
@@ -54,6 +69,7 @@ class NewsFragment : Fragment() {
                 is LoadState.Error -> {
                     Toast.makeText(requireContext(), "Ups, some error...", Toast.LENGTH_SHORT).show()
                 }
+                else -> {}
             }
         }
     }

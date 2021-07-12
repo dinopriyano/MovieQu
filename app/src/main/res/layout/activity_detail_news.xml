@@ -18,31 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btn_back"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:cardCornerRadius="20dp"
-                app:rippleColor="@color/ripple_back_button"
-                app:cardBackgroundColor="#4D4C4C4C"
-                android:elevation="10dp"
-                android:layout_margin="15dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_back"
-                    app:tint="@color/white"
-                    android:padding="10dp"/>
-
-            </com.google.android.material.card.MaterialCardView>
-
             <com.tistory.zladnrms.roundablelayout.RoundableLayout
                 android:id="@+id/container_title"
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
+                android:layout_height="300dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:backgroundColor="@color/tertiary_dark"
                 app:cornerLeftBottom="30dp"
@@ -50,13 +29,15 @@
 
                 <ImageView
                     android:id="@+id/iv_article"
+                    android:transitionName="@string/transition_image_article"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/dummy_news"/>
+                    android:src="@color/primary_dark"/>
 
                 <TextView
                     android:id="@+id/txt_title"
+                    android:transitionName="@string/transition_title_article"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
@@ -70,6 +51,33 @@
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
             </com.tistory.zladnrms.roundablelayout.RoundableLayout>
+
+            <View
+                android:id="@+id/space_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:cardCornerRadius="20dp"
+                app:rippleColor="@color/ripple_back_button"
+                app:cardBackgroundColor="#4D4C4C4C"
+                app:cardElevation="0dp"
+                android:layout_margin="15dp"
+                app:layout_constraintTop_toBottomOf="@id/space_view"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_back"
+                    app:tint="@color/white"
+                    android:padding="10dp"/>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/iv_author"
@@ -87,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
                 app:layout_constraintStart_toEndOf="@id/iv_author"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/iv_author"
@@ -94,9 +103,10 @@
 
                 <TextView
                     android:id="@+id/txt_author"
+                    android:transitionName="@string/transition_author_article"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:ellipsize="end"
                     android:text="@string/john_doe"
                     android:textColor="@color/white"
