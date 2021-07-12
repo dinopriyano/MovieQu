@@ -1,7 +1,13 @@
 package com.dupat.newsqu.ui
 
+import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Shader
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextPaint
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.dupat.newsqu.R
@@ -21,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.navigationBottom.background = null
 
+        setToolbarTitleGradient()
         navigationChange(NewsFragment())
 
         binding.navigationBottom.setOnItemSelectedListener  { item ->
@@ -37,6 +44,23 @@ class MainActivity : AppCompatActivity() {
         binding.navigationBottom.setOnItemReselectedListener {
         }
     }
+
+    private fun setToolbarTitleGradient() {
+
+        val toolbarTitle : TextView = binding.toolbar.getChildAt(0) as TextView
+
+        val paint : TextPaint = toolbarTitle.paint
+        val width : Float = paint.measureText(toolbarTitle.text.toString())
+        val textShader : Shader = LinearGradient(0f,0f, width, toolbarTitle.textSize,intArrayOf(
+            ContextCompat.getColor(this, R.color.orange),
+            ContextCompat.getColor(this, R.color.purple),
+            ContextCompat.getColor(this, R.color.blue)
+        ), null, Shader.TileMode.CLAMP)
+
+        toolbarTitle.paint.shader = textShader
+
+    }
+
 
     private fun navigationChange(fragment: Fragment) {
         supportFragmentManager

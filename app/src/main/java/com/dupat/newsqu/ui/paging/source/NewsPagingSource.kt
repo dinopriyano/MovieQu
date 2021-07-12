@@ -1,5 +1,6 @@
 package com.dupat.newsqu.ui.paging.source
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.dupat.newsqu.data.remote.network.ApiService
@@ -21,7 +22,7 @@ class NewsPagingSource(val service: ApiService) : PagingSource<Int, Article>() {
 
         return try{
             val page = params.key?:1
-            val response = service.getPopularNews(Constants.API_KEY, Constants.COUNTRY, page, params.loadSize)
+            val response = service.getPopularNews(Constants.API_KEY, Constants.COUNTRY, page, Constants.PAGE_SIZE)
             val data = response.articles
             LoadResult.Page(
                 data = data,

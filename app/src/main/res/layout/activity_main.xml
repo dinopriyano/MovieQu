@@ -14,27 +14,12 @@
         android:background="@color/primary_dark"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:layout_width="0dp"
-                android:layout_weight="1"
+        <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
                 app:title="@string/title"
                 app:titleTextColor="@color/white"
                 android:layout_height="wrap_content"/>
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                app:riv_corner_radius="17dp"
-                android:src="@color/white"
-                android:layout_marginRight="15dp"/>
-
-        </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -60,6 +45,10 @@
         app:backgroundTint="@color/primary_dark"
         app:fabCradleMargin="10dp"
         app:fabCradleVerticalOffset="5dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
         app:hideOnScroll="true"
         app:fabCradleRoundedCornerRadius="20dp"
         android:layout_gravity="bottom">
@@ -78,12 +67,12 @@
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_bookmark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_bookmark"
         app:tint="@color/white"
-        app:backgroundTint="#5697E7"
+        app:backgroundTint="@color/blue"
         app:layout_anchor="@id/bottomAppBar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
