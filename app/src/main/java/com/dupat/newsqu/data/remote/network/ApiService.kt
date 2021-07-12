@@ -18,7 +18,7 @@ interface ApiService {
 
     @GET("everything")
     suspend fun getSearchNews(
-        @Query("apiKey") apiKey: String = Constants.API_KEY,
+        @Query("apiKey") apiKey: String,
         @Query("q") query: String,
         @Query("page") page: Int,
         @Query("pageSize") size: Int
