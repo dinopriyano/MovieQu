@@ -19,6 +19,7 @@ import com.dupat.newsqu.ui.DetailNewsActivity
 import com.dupat.newsqu.ui.adapter.FooterAdapter
 import com.dupat.newsqu.ui.paging.adapter.NewsPagingAdapter
 import com.dupat.newsqu.ui.viewmodel.NewsViewModel
+import com.dupat.newsqu.utils.NewsClickEnum
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -46,14 +47,23 @@ class NewsFragment : Fragment() {
         initAdapter()
         loadData()
 
-        newsAdapter.onItemClick = { article, ivArticle ->
-            val intent = Intent(requireContext(), DetailNewsActivity::class.java)
-            intent.putExtra(DetailNewsActivity.NEWS_EXTRA, article)
+        newsAdapter.onItemClick = { article, ivArticle, newsClickEnum ->
+            if(newsClickEnum == NewsClickEnum.DETAIL){
+                val intent = Intent(requireContext(), DetailNewsActivity::class.java)
+                intent.putExtra(DetailNewsActivity.NEWS_EXTRA, article)
 
-            val pairImageAticle = Pair.create<View, String>(ivArticle, resources.getString(R.string.transition_image_article))
-            val activityOptions = ActivityOptions.makeSceneTransitionAnimation(requireActivity(), pairImageAticle)
+                val pairImageAticle = Pair.create<View, String>(ivArticle, resources.getString(R.string.transition_image_article))
+                val activityOptions = ActivityOptions.makeSceneTransitionAnimation(requireActivity(), pairImageAticle)
 
-            requireContext().startActivity(intent, activityOptions.toBundle())
+                requireContext().startActivity(intent, activityOptions.toBundle())
+            }
+            else{
+                val sendIntent = Intent()
+                sendIntent.action = Intent.ACTION_SEND
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hi, i've read news at ${article?.url ?: "https://newsapi.org"}")
+                sendIntent.type = "text/plain"
+                startActivity(sendIntent)
+            }
         }
     }
 

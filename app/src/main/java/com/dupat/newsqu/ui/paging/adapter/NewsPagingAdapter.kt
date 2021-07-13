@@ -17,12 +17,13 @@ import com.bumptech.glide.request.target.Target
 import com.dupat.newsqu.R
 import com.dupat.newsqu.databinding.ItemNewsListBinding
 import com.dupat.newsqu.ui.model.Article
+import com.dupat.newsqu.utils.NewsClickEnum
 import com.dupat.newsqu.utils.toLocalDate
 import com.dupat.newsqu.utils.toTimeAgo
 
 class NewsPagingAdapter : PagingDataAdapter<Article, NewsPagingAdapter.ViewHolder>(DIFF_UTIL) {
 
-    var onItemClick: ((Article?, ImageView) -> Unit)? = null
+    var onItemClick: ((Article?, ImageView,NewsClickEnum) -> Unit)? = null
 
     companion object {
         val DIFF_UTIL = object : DiffUtil.ItemCallback<Article>() {
@@ -62,6 +63,7 @@ class NewsPagingAdapter : PagingDataAdapter<Article, NewsPagingAdapter.ViewHolde
 
             with(binding) {
                 container.setOnClickListener(this@ViewHolder)
+                btnShare.setOnClickListener(this@ViewHolder)
 
                 Glide.with(itemView.context)
                     .load(article?.urlToImage)
@@ -101,7 +103,10 @@ class NewsPagingAdapter : PagingDataAdapter<Article, NewsPagingAdapter.ViewHolde
         override fun onClick(v: View?) {
             when (v) {
                 binding.container -> {
-                    onItemClick?.invoke(article, binding.ivNews)
+                    onItemClick?.invoke(article, binding.ivNews, NewsClickEnum.DETAIL)
+                }
+                binding.btnShare -> {
+                    onItemClick?.invoke(article, binding.ivNews, NewsClickEnum.SEND)
                 }
             }
         }
