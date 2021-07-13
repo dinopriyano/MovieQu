@@ -3,6 +3,7 @@ package com.dupat.newsqu.data.remote.network
 import com.dupat.newsqu.data.remote.response.ApiResponse
 import com.dupat.newsqu.ui.model.Article
 import com.dupat.newsqu.utils.Constants
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,7 +15,7 @@ interface ApiService {
         @Query("country") country: String,
         @Query("page") page: Int,
         @Query("pageSize") size: Int
-    ) : ApiResponse<Article>
+    ) : ApiResponse
 
     @GET("everything")
     suspend fun getSearchNews(
@@ -22,6 +23,6 @@ interface ApiService {
         @Query("q") query: String,
         @Query("page") page: Int,
         @Query("pageSize") size: Int
-    ) : ApiResponse<Article>
+    ) : ApiResponse
 
 }

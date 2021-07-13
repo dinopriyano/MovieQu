@@ -13,7 +13,6 @@ data class ArticleEntity(
 
     val description: String?,
 
-    @ColumnInfo(name = "published_at")
     val publishedAt: String?,
 
     @PrimaryKey(autoGenerate = false)
@@ -21,6 +20,5 @@ data class ArticleEntity(
 
     val url: String?,
 
-    @ColumnInfo(name = "image_url")
     val urlToImage: String?
 )

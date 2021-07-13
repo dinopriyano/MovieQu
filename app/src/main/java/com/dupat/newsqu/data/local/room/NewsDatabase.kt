@@ -7,7 +7,7 @@ import com.dupat.newsqu.data.local.entities.RemoteKeyEntity
 import com.dupat.newsqu.data.local.room.dao.NewsDao
 import com.dupat.newsqu.data.local.room.dao.RemoteDao
 
-@Database(entities = [ArticleEntity::class, RemoteKeyEntity::class], version = 1, exportSchema = false)
+@Database(entities = [ArticleEntity::class, RemoteKeyEntity::class], version = 1)
 abstract class NewsDatabase: RoomDatabase() {
     abstract fun newsDao(): NewsDao
     abstract fun remoteDao(): RemoteDao

@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "remote_keys")
 data class RemoteKeyEntity(
 
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey(autoGenerate = false)
+    val title: String,
 
     val prevKey:Int?,
 

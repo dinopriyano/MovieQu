@@ -10,11 +10,13 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.paging.ExperimentalPagingApi
 import com.dupat.newsqu.R
 import com.dupat.newsqu.databinding.ActivityMainBinding
 import com.dupat.newsqu.ui.fragment.NewsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalPagingApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 

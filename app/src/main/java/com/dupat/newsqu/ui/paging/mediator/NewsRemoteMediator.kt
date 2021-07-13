@@ -1,79 +1,102 @@
 package com.dupat.newsqu.ui.paging.mediator
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
+import androidx.room.withTransaction
 import com.dupat.newsqu.data.local.entities.ArticleEntity
 import com.dupat.newsqu.data.local.entities.RemoteKeyEntity
-import com.dupat.newsqu.data.local.room.dao.NewsDao
-import com.dupat.newsqu.data.local.room.dao.RemoteDao
+import com.dupat.newsqu.data.local.room.NewsDatabase
 import com.dupat.newsqu.data.remote.network.ApiService
 import com.dupat.newsqu.utils.Constants
 import com.dupat.newsqu.utils.toArticleEntities
-import java.io.InvalidObjectException
+import retrofit2.HttpException
+import java.io.IOException
 
-@ExperimentalPagingApi
-class NewsRemoteMediator(private val newsDao: NewsDao, private val remoteDao: RemoteDao, private val apiService: ApiService): RemoteMediator<Int, ArticleEntity>() {
+@OptIn(ExperimentalPagingApi::class)
+class NewsRemoteMediator(
+    private val database: NewsDatabase,
+    private val networkService: ApiService
+) : RemoteMediator<Int, ArticleEntity>() {
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, ArticleEntity>): MediatorResult {
-        return try {
-            val page = getKeyPageData(loadType, state) as Int
-            val response = apiService.getPopularNews(Constants.API_KEY, Constants.COUNTRY, page, Constants.PAGE_SIZE)
-            val endOfPagination = response.articles.size < Constants.PAGE_SIZE
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, ArticleEntity>
+    ): MediatorResult {
 
-            response.let {
-                if(loadType == LoadType.REFRESH){
-                    remoteDao.deleteByQuery()
-                    newsDao.deleteAllNews()
-                }
-
-                val nextKeys = if(endOfPagination) null else page+1
-                val prevKeys = if(page == 1) null else page-1
-
-                val list = it.articles.map {
-                    RemoteKeyEntity(it.title ,prevKeys, nextKeys)
-                }
-
-                remoteDao.insertOrReplace(list)
-                newsDao.insertAllNews(it.articles.toArticleEntities())
+        val pageKeyData = getKeyPageData(loadType, state)
+        val page = when (pageKeyData) {
+            is MediatorResult.Success -> {
+                return pageKeyData
             }
-
-            MediatorResult.Success(endOfPaginationReached = endOfPagination)
+            else -> {
+                pageKeyData as Int
+            }
         }
-        catch (e: Exception){
+
+        return try {
+            val response = networkService.getPopularNews(Constants.API_KEY, Constants.COUNTRY,page,state.config.pageSize)
+            val isEndOfList = response.articles.isEmpty()
+
+            database.withTransaction {
+                if (loadType == LoadType.REFRESH) {
+                    database.newsDao().deleteAllNews()
+                    database.remoteDao().deleteByQuery()
+                }
+                val prevKey = if (page == 1) null else page - 1
+                val nextKey = if (isEndOfList) null else page + 1
+                val keys = response.articles.map {
+                    RemoteKeyEntity(it.title, prevKey = prevKey, nextKey = nextKey)
+                }
+                database.remoteDao().insertOrReplace(keys)
+                database.newsDao().insertAllNews(response.articles.toArticleEntities())
+            }
+            return MediatorResult.Success(endOfPaginationReached = isEndOfList)
+        } catch (e: IOException) {
+            MediatorResult.Error(e)
+        } catch (e: HttpException) {
             MediatorResult.Error(e)
         }
     }
 
-    suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, ArticleEntity>): Any {
-        return when(loadType){
+    private suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, ArticleEntity>): Any {
+        return when (loadType) {
+            LoadType.REFRESH -> {
+                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                remoteKeys?.nextKey?.minus(1) ?: 1
+            }
             LoadType.APPEND -> {
-                val remoteKey = getLastRemoteKey(state) ?: throw InvalidObjectException("Invalid Object")
-                remoteKey.nextKey ?: MediatorResult.Success(endOfPaginationReached = true)
+                val remoteKeys = getLastRemoteKey(state)
+                val nextKey = remoteKeys?.nextKey
+                return nextKey ?: MediatorResult.Success(endOfPaginationReached = false)
             }
             LoadType.PREPEND -> {
-                MediatorResult.Success(endOfPaginationReached = true)
-            }
-            LoadType.REFRESH -> {
-                val remoteKey = getClosestRemoteKeys(state)
-                remoteKey?.nextKey?.minus(1) ?: 1
+                val remoteKeys = getFirstRemoteKey(state)
+                remoteKeys?.prevKey ?: return MediatorResult.Success(endOfPaginationReached = true)
             }
         }
     }
 
-    suspend fun getClosestRemoteKeys(state: PagingState<Int, ArticleEntity>): RemoteKeyEntity? {
-        return state.anchorPosition?.let {
-            state.closestItemToPosition(it)?.let { article ->
-                remoteDao.remoteKeyByQuery(article.title)
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ArticleEntity>): RemoteKeyEntity? {
+        return state.anchorPosition?.let { position ->
+            state.closestItemToPosition(position)?.title?.let { title ->
+                database.remoteDao().remoteKeyByQuery(title)
             }
         }
     }
 
-    suspend fun getLastRemoteKey(state: PagingState<Int, ArticleEntity>): RemoteKeyEntity? {
-        return state.lastItemOrNull()?.let { article ->
-            remoteDao.remoteKeyByQuery(article.title)
-        }
+    private suspend fun getLastRemoteKey(state: PagingState<Int, ArticleEntity>): RemoteKeyEntity? {
+        return state.pages
+            .lastOrNull { it.data.isNotEmpty() }
+            ?.data?.lastOrNull()
+            ?.let { article -> database.remoteDao().remoteKeyByQuery(article.title) }
+    }
+
+    private suspend fun getFirstRemoteKey(state: PagingState<Int, ArticleEntity>): RemoteKeyEntity? {
+        return state.pages
+            .firstOrNull { it.data.isNotEmpty() }
+            ?.data?.firstOrNull()
+            ?.let { article -> database.remoteDao().remoteKeyByQuery(article.title) }
     }
 }

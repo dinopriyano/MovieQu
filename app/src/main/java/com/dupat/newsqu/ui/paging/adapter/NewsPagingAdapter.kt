@@ -27,7 +27,8 @@ class  NewsPagingAdapter: PagingDataAdapter<Article, NewsPagingAdapter.ViewHolde
 
     override fun onBindViewHolder(holder: NewsPagingAdapter.ViewHolder, position: Int) {
         val article = getItem(position)
-        holder.bind(article!!)
+        if(article != null)
+            holder.bind(article)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsPagingAdapter.ViewHolder {

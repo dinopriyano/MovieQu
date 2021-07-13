@@ -1,6 +1,7 @@
 package com.dupat.newsqu.di
 
 import android.app.Application
+import androidx.paging.ExperimentalPagingApi
 import androidx.room.Room
 import com.dupat.newsqu.data.local.room.NewsDatabase
 import com.dupat.newsqu.data.remote.network.ApiService
@@ -33,19 +34,20 @@ class MovieModule {
     @Singleton
     @Provides
     fun provideNewsDatabase(app: Application): NewsDatabase{
-        val passphrase = SQLiteDatabase.getBytes("dupatid".toCharArray())
-        val factory = SupportFactory(passphrase)
+//        val passphrase = SQLiteDatabase.getBytes("dupatid".toCharArray())
+//        val factory = SupportFactory(passphrase)
 
         return Room.databaseBuilder(app, NewsDatabase::class.java, "news.db")
-            .fallbackToDestructiveMigration()
-            .openHelperFactory(factory)
+//            .fallbackToDestructiveMigration()
+//            .openHelperFactory(factory)
             .build()
     }
 
+    @ExperimentalPagingApi
     @Singleton
     @Provides
     fun provideNewsRepository(apiService: ApiService, newsDatabase: NewsDatabase) : NewsRepository{
-        return NewsRepository(apiService, newsDatabase.newsDao(), newsDatabase.remoteDao())
+        return NewsRepository(apiService, newsDatabase)
     }
 
 }

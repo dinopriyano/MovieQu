@@ -63,17 +63,17 @@ class NewsFragment : Fragment() {
             }
         }
 
-        newsAdapter.addLoadStateListener { state ->
-            when(state.refresh){
-                is LoadState.Loading -> {
-                    Toast.makeText(requireContext(), "Loading data...", Toast.LENGTH_SHORT).show()
-                }
-                is LoadState.Error -> {
-                    Toast.makeText(requireContext(), "Ups, some error...", Toast.LENGTH_SHORT).show()
-                }
-                else -> {}
-            }
-        }
+//        newsAdapter.addLoadStateListener { state ->
+//            when(state.refresh){
+//                is LoadState.Loading -> {
+//                    Toast.makeText(requireContext(), "Loading data...", Toast.LENGTH_SHORT).show()
+//                }
+//                is LoadState.Error -> {
+//                    Toast.makeText(requireContext(), "Ups, some error...", Toast.LENGTH_SHORT).show()
+//                }
+//                else -> {}
+//            }
+//        }
     }
 
     private fun initAdapter() {
