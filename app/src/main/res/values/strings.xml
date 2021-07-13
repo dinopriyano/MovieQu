@@ -15,4 +15,6 @@
     <string name="transition_title_article">transitionTitleArticle</string>
     <string name="transition_author_article">transitionAuthorArticle</string>
     <string name="share">Share</string>
+    <string name="no_internet">No Internet connection</string>
+    <string name="retry">retry</string>
 </resources>

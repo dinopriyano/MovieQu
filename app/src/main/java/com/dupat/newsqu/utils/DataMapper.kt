@@ -3,7 +3,7 @@ package com.dupat.newsqu.utils
 import com.dupat.newsqu.data.local.entities.ArticleEntity
 import com.dupat.newsqu.ui.model.Article
 
-fun List<Article>.toArticleEntities() : List<ArticleEntity>{
+fun List<Article>.toArticleEntities(): List<ArticleEntity> {
     val entities = ArrayList<ArticleEntity>()
     this.map {
         val entity = ArticleEntity(
@@ -22,7 +22,7 @@ fun List<Article>.toArticleEntities() : List<ArticleEntity>{
     return entities
 }
 
-fun List<ArticleEntity>.toArticleResponse() : List<Article>{
+fun List<ArticleEntity>.toArticleResponse(): List<Article> {
     val responsList = ArrayList<Article>()
     this.map {
         val response = Article(
@@ -41,7 +41,7 @@ fun List<ArticleEntity>.toArticleResponse() : List<Article>{
     return responsList
 }
 
-fun ArticleEntity.toArticle() : Article {
+fun ArticleEntity.toArticle(): Article {
     return Article(
         this.author,
         this.content,

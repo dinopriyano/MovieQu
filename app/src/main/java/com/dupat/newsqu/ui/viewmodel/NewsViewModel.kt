@@ -14,19 +14,20 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-@ExperimentalPagingApi
 @HiltViewModel
-class NewsViewModel @Inject constructor(private val repository : NewsRepository): ViewModel() {
+class NewsViewModel @Inject constructor(val repository: NewsRepository) : ViewModel() {
 
     //for paging without offline caching (Remote mediator)
     val popularNewsPaging : Flow<PagingData<Article>> = repository.getResultPager().cachedIn(viewModelScope)
 
-    val popularNews : Flow<PagingData<Article>> = repository.getResult().map {
+    @ExperimentalPagingApi
+    val popularNews: Flow<PagingData<Article>> = repository.getResult().map {
         it.map { entity ->
             entity.toArticle()
         }
     }.cachedIn(viewModelScope)
 
+    @ExperimentalPagingApi
     fun getPopNews() = popularNews
 
 }

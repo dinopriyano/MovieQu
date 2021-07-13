@@ -9,7 +9,7 @@ data class RemoteKeyEntity(
     @PrimaryKey(autoGenerate = false)
     val title: String,
 
-    val prevKey:Int?,
+    val prevKey: Int?,
 
     val nextKey: Int?
 

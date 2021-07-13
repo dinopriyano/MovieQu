@@ -2,11 +2,10 @@ package com.dupat.newsqu.ui
 
 import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -19,7 +18,7 @@ import com.dupat.newsqu.utils.toTimeDetail
 
 class DetailNewsActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
         val NEWS_EXTRA = "news_extra"
     }
 
@@ -45,18 +44,20 @@ class DetailNewsActivity : AppCompatActivity() {
 
     private fun setSpaceView() {
         val space = this.statusBarHeight()
-        binding?.spaceView?.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, space)
+        binding?.spaceView?.layoutParams =
+            ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, space)
     }
 
     private fun initData() {
-        with(binding!!){
+        with(binding!!) {
             Glide.with(this@DetailNewsActivity)
                 .load(newsExtra.urlToImage)
                 .error(ContextCompat.getDrawable(this@DetailNewsActivity, R.drawable.shape_gray))
                 .into(ivArticle)
 
-            val contentArticle = if(newsExtra.content.isNullOrEmpty()) "" else newsExtra.content!!.split(" [+").get(0)
-            val authorArticle = if(newsExtra.author.isNullOrEmpty()) "Anonym" else newsExtra.author
+            val contentArticle =
+                if (newsExtra.content.isNullOrEmpty()) "" else newsExtra.content!!.split(" [+")[0]
+            val authorArticle = if (newsExtra.author.isNullOrEmpty()) "Anonym" else newsExtra.author
 
             txtAuthor.text = authorArticle
             txtContent.text = contentArticle
@@ -65,12 +66,13 @@ class DetailNewsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setTransparentStatusBar(){
+    private fun setTransparentStatusBar() {
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
         }
         if (Build.VERSION.SDK_INT >= 19) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
         if (Build.VERSION.SDK_INT >= 21) {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)

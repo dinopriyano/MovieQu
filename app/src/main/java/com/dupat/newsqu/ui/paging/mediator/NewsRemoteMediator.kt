@@ -36,7 +36,13 @@ class NewsRemoteMediator(
         }
 
         return try {
-            val response = networkService.getPopularNews(Constants.API_KEY, Constants.COUNTRY,page,state.config.pageSize)
+            val response = networkService.getPopularNews(
+                Constants.API_KEY,
+                Constants.COUNTRY,
+                page,
+                state.config.pageSize
+            )
+
             val isEndOfList = response.articles.isEmpty()
 
             database.withTransaction {
@@ -44,11 +50,13 @@ class NewsRemoteMediator(
                     database.newsDao().deleteAllNews()
                     database.remoteDao().deleteByQuery()
                 }
+
                 val prevKey = if (page == 1) null else page - 1
                 val nextKey = if (isEndOfList) null else page + 1
                 val keys = response.articles.map {
                     RemoteKeyEntity(it.title, prevKey = prevKey, nextKey = nextKey)
                 }
+
                 database.remoteDao().insertOrReplace(keys)
                 database.newsDao().insertAllNews(response.articles.toArticleEntities())
             }
@@ -60,7 +68,10 @@ class NewsRemoteMediator(
         }
     }
 
-    private suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, ArticleEntity>): Any {
+    private suspend fun getKeyPageData(
+        loadType: LoadType,
+        state: PagingState<Int, ArticleEntity>
+    ): Any {
         return when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)

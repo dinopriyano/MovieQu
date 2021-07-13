@@ -3,7 +3,6 @@
     package="com.dupat.newsqu">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".BaseApplication"
@@ -12,8 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MovieQu"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.MovieQu">
         <activity android:name=".ui.DetailNewsActivity"></activity>
         <activity android:name=".ui.MainActivity">
             <intent-filter>
