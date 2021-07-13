@@ -42,13 +42,7 @@ class MovieModule {
     @Singleton
     @Provides
     fun provideNewsDatabase(@ApplicationContext appContext: Context): NewsDatabase{
-        val passphrase = SQLiteDatabase.getBytes("dupatid".toCharArray())
-        val factory = SupportFactory(passphrase)
-
-        return Room.databaseBuilder(appContext, NewsDatabase::class.java, "news.db")
-            .fallbackToDestructiveMigration()
-            .openHelperFactory(factory)
-            .build()
+        return NewsDatabase.getInstance(appContext)
     }
 
     @ExperimentalPagingApi
