@@ -20,4 +20,13 @@
         android:name="com.dupat.newsqu.ui.fragment.SearchNewsFragment"
         android:label="fragment_search_news"
         tools:layout="@layout/fragment_search_news" />
+    <activity
+        android:id="@+id/detailNewsActivity"
+        android:name="com.dupat.newsqu.ui.DetailNewsActivity"
+        android:label="activity_detail_news"
+        tools:layout="@layout/activity_detail_news" >
+        <argument
+            android:name="article"
+            app:argType="com.dupat.newsqu.ui.model.Article" />
+    </activity>
 </navigation>

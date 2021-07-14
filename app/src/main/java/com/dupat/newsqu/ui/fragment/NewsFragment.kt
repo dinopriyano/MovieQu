@@ -4,14 +4,21 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.ActivityNavigatorExtras
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.map
@@ -20,6 +27,7 @@ import com.dupat.newsqu.R
 import com.dupat.newsqu.databinding.FragmentNewsBinding
 import com.dupat.newsqu.ui.DetailNewsActivity
 import com.dupat.newsqu.ui.adapter.FooterAdapter
+import com.dupat.newsqu.ui.adapter.itemdecoration.VerticalSpaceItemDecoration
 import com.dupat.newsqu.ui.paging.adapter.NewsPagingAdapter
 import com.dupat.newsqu.ui.viewmodel.NewsViewModel
 import com.dupat.newsqu.utils.NewsClickEnum
@@ -52,13 +60,12 @@ class NewsFragment : Fragment() {
 
         newsAdapter.onItemClick = { article, ivArticle, newsClickEnum ->
             if(newsClickEnum == NewsClickEnum.DETAIL){
-                val intent = Intent(requireContext(), DetailNewsActivity::class.java)
-                intent.putExtra(DetailNewsActivity.NEWS_EXTRA, article)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), Pair.create(ivArticle, resources.getString(R.string.transition_image_article)))
+                val extras = ActivityNavigatorExtras(options)
 
-                val pairImageAticle = Pair.create<View, String>(ivArticle, resources.getString(R.string.transition_image_article))
-                val activityOptions = ActivityOptions.makeSceneTransitionAnimation(requireActivity(), pairImageAticle)
-
-                requireContext().startActivity(intent, activityOptions.toBundle())
+                val bundle = Bundle()
+                bundle.putParcelable("article", article)
+                view.findNavController().navigate(R.id.detailNewsActivity,bundle,null, extras)
             }
             else{
                 val sendIntent = Intent()
@@ -71,10 +78,13 @@ class NewsFragment : Fragment() {
     }
 
     private fun initAdapter() {
+        val spaceHeightInPixel = resources.getDimensionPixelSize(R.dimen.vertical_space_margin)
+
         with(binding!!){
             rvNews.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
+                addItemDecoration(VerticalSpaceItemDecoration(spaceHeightInPixel))
                 adapter = newsAdapter.withLoadStateHeaderAndFooter(
                     header = FooterAdapter{newsAdapter.retry()},
                     footer = FooterAdapter{newsAdapter.retry()}

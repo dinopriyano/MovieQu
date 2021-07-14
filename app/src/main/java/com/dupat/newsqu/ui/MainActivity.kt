@@ -7,13 +7,11 @@ import android.text.TextPaint
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.dupat.newsqu.R
 import com.dupat.newsqu.databinding.ActivityMainBinding
-import com.dupat.newsqu.ui.fragment.BookmarkFragment
-import com.dupat.newsqu.ui.fragment.NewsFragment
-import com.dupat.newsqu.ui.fragment.SearchNewsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -21,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,23 +29,21 @@ class MainActivity : AppCompatActivity() {
         binding.navigationBottom.background = null
 
         setToolbarTitleGradient()
-        navigationChange(NewsFragment())
+        setupNavigation()
+    }
 
-        binding.navigationBottom.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.menuNews -> {
-                    navigationChange(NewsFragment())
-                    true
-                }
-                R.id.menuSearch -> {
-                    navigationChange(SearchNewsFragment())
-                    true
-                }
-                else -> false
-            }
+    private fun setupNavigation() {
+        navController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+        NavigationUI.setupWithNavController(binding.navigationBottom, navController)
+        binding.navigationBottom.setOnItemReselectedListener {}
+    }
+
+    private fun hideNavBottom(isHide: Boolean) {
+        if(isHide){
+            binding.bottomAppBar.performHide()
         }
-
-        binding.navigationBottom.setOnItemReselectedListener {
+        else{
+            binding.bottomAppBar.performShow()
         }
     }
 
@@ -66,14 +63,5 @@ class MainActivity : AppCompatActivity() {
 
         toolbarTitle.paint.shader = textShader
 
-    }
-
-
-    private fun navigationChange(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.frame_container, fragment)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .commit()
     }
 }

@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.navigation.navArgs
 import com.bumptech.glide.Glide
 import com.dupat.newsqu.R
 import com.dupat.newsqu.databinding.ActivityDetailNewsBinding
@@ -17,10 +18,6 @@ import com.dupat.newsqu.utils.toLocalDate
 import com.dupat.newsqu.utils.toTimeDetail
 
 class DetailNewsActivity : AppCompatActivity() {
-
-    companion object {
-        val NEWS_EXTRA = "news_extra"
-    }
 
     private var _binding: ActivityDetailNewsBinding? = null
     private val binding get() = _binding
@@ -34,7 +31,7 @@ class DetailNewsActivity : AppCompatActivity() {
 
         setSpaceView()
 
-        newsExtra = intent.extras?.get(NEWS_EXTRA) as Article
+        newsExtra = DetailNewsActivityArgs.fromBundle(intent.extras!!).article
         initData()
 
         binding?.btnBack?.setOnClickListener {

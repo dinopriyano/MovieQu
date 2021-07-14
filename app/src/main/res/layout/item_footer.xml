@@ -18,10 +18,10 @@
         android:textAlignment="center"
         tools:text="@string/no_internet"/>
 
-    <ProgressBar
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyle"
         app:indicatorColor="@color/white"
+        android:indeterminate="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>

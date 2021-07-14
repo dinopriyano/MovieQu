@@ -46,9 +46,7 @@ class NewsRemoteMediator(
                 state.config.pageSize
             )
 
-            Log.d("Dick", "response: $response")
             val isEndOfList = response.articles.isEmpty()
-            Log.d("Dick", "isEnd: $isEndOfList")
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
