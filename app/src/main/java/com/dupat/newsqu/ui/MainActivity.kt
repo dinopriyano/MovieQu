@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.dupat.newsqu.R
 import com.dupat.newsqu.databinding.ActivityMainBinding
+import com.dupat.newsqu.ui.fragment.BookmarkFragment
 import com.dupat.newsqu.ui.fragment.NewsFragment
+import com.dupat.newsqu.ui.fragment.SearchNewsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -36,9 +38,17 @@ class MainActivity : AppCompatActivity() {
                     navigationChange(NewsFragment())
                     true
                 }
-
+                R.id.menuSearch -> {
+                    navigationChange(SearchNewsFragment())
+                    true
+                }
                 else -> false
             }
+        }
+
+        binding.fabBookmark.setOnClickListener {
+            binding.navigationBottom.menu.setGroupCheckable(0, true, true)
+            navigationChange(BookmarkFragment())
         }
 
         binding.navigationBottom.setOnItemReselectedListener {

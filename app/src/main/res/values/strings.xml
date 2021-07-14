@@ -17,4 +17,6 @@
     <string name="share">Share</string>
     <string name="no_internet">No Internet connection</string>
     <string name="retry">retry</string>
+    <string name="bookmark_fragment">Bookmark Fragment</string>
+    <string name="search_news_fragment">Search News Fragment</string>
 </resources>
