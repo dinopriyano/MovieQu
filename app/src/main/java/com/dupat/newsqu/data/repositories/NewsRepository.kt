@@ -25,15 +25,15 @@ class NewsRepository(private val apiService: ApiService, private val newsDatabas
 
     @ExperimentalPagingApi
     fun getResult(): Flow<PagingData<ArticleEntity>> {
-        val sourceFactory = { newsDatabase.newsDao().getAllNews() }
         return Pager(
             config = PagingConfig(pageSize = Constants.PAGE_SIZE, enablePlaceholders = false),
             remoteMediator = NewsRemoteMediator(
                 database = newsDatabase,
                 networkService = apiService
-            ),
-            pagingSourceFactory = sourceFactory
-        ).flow
+            )
+        ){
+            newsDatabase.newsDao().getAllNews()
+        }.flow
     }
 
 }

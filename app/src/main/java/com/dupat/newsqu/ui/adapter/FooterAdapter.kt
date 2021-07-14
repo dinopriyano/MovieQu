@@ -30,11 +30,12 @@ class FooterAdapter(private val retry: () -> Unit) : LoadStateAdapter<FooterAdap
 
         fun bind(loadState: LoadState) {
             with(binding) {
-                progressBar.isVisible = loadState is LoadState.Loading
-                btnRetry.isVisible = loadState is LoadState.Loading
-                txtErrorMsg.isVisible =
-                    !(loadState as? LoadState.Error)?.error?.message.isNullOrBlank()
-                txtErrorMsg.text = (loadState as? LoadState.Error)?.error?.message
+                if(loadState is LoadState.Error){
+                    txtErrorMsg.text = "Ups, some error..."
+                }else{
+                    progressBar.isVisible = loadState is LoadState.Loading
+                    btnRetry.isVisible = loadState !is LoadState.Loading
+                }
             }
         }
 

@@ -3,15 +3,18 @@ package com.dupat.newsqu.ui.fragment
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
+import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dupat.newsqu.R
 import com.dupat.newsqu.databinding.FragmentNewsBinding
@@ -68,13 +71,15 @@ class NewsFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        binding?.rvNews!!.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            setHasFixedSize(true)
-            adapter = newsAdapter.withLoadStateHeaderAndFooter(
-                header = FooterAdapter{newsAdapter.retry()},
-                footer = FooterAdapter{newsAdapter.retry()}
-            )
+        with(binding!!){
+            rvNews.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                setHasFixedSize(true)
+                adapter = newsAdapter.withLoadStateHeaderAndFooter(
+                    header = FooterAdapter{newsAdapter.retry()},
+                    footer = FooterAdapter{newsAdapter.retry()}
+                )
+            }
         }
     }
 

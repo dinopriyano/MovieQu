@@ -1,5 +1,6 @@
 package com.dupat.newsqu.ui.paging.mediator
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -35,6 +36,8 @@ class NewsRemoteMediator(
             }
         }
 
+
+
         return try {
             val response = networkService.getPopularNews(
                 Constants.API_KEY,
@@ -43,7 +46,9 @@ class NewsRemoteMediator(
                 state.config.pageSize
             )
 
+            Log.d("Dick", "response: $response")
             val isEndOfList = response.articles.isEmpty()
+            Log.d("Dick", "isEnd: $isEndOfList")
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
@@ -60,7 +65,7 @@ class NewsRemoteMediator(
                 database.remoteDao().insertOrReplace(keys)
                 database.newsDao().insertAllNews(response.articles.toArticleEntities())
             }
-            return MediatorResult.Success(endOfPaginationReached = isEndOfList)
+            MediatorResult.Success(endOfPaginationReached = isEndOfList)
         } catch (e: IOException) {
             MediatorResult.Error(e)
         } catch (e: HttpException) {
@@ -80,11 +85,11 @@ class NewsRemoteMediator(
             LoadType.APPEND -> {
                 val remoteKeys = getLastRemoteKey(state)
                 val nextKey = remoteKeys?.nextKey
-                return nextKey ?: MediatorResult.Success(endOfPaginationReached = false)
+                nextKey ?: MediatorResult.Success(endOfPaginationReached = false)
             }
             LoadType.PREPEND -> {
                 val remoteKeys = getFirstRemoteKey(state)
-                remoteKeys?.prevKey ?: return MediatorResult.Success(endOfPaginationReached = true)
+                remoteKeys?.prevKey ?: MediatorResult.Success(endOfPaginationReached = true)
             }
         }
     }
