@@ -46,11 +46,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.fabBookmark.setOnClickListener {
-            binding.navigationBottom.menu.setGroupCheckable(0, true, true)
-            navigationChange(BookmarkFragment())
-        }
-
         binding.navigationBottom.setOnItemReselectedListener {
         }
     }

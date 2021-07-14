@@ -10,6 +10,7 @@ buildscript {
         lifecycle_viewmodel_version = "2.4.0-alpha02"
         coroutines_version = "1.5.0"
         retrofit_version = "2.9.0"
+        nav_version = '2.3.5'
         paging_version = "3.0.0"
         hilt_version = "2.35"
         dagger_version = "2.37"
@@ -20,8 +21,6 @@ buildscript {
         glide_version = "4.12.0"
         time_ago_version = "4.0.3"
         lifecycle_runtime_version = "2.3.1"
-        activity_ktx_version = "1.2.3"
-        fragment_ktx_version = "1.3.5"
         loging_version = "4.9.1"
     }
     repositories {
@@ -33,6 +32,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
 }
 
