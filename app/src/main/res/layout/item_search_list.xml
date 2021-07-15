@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/vertical_space_margin"
+    android:layout_marginLeft="@dimen/vertical_space_margin"
+    android:layout_marginRight="@dimen/vertical_space_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_search"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        app:hintEnabled="false"
+        app:boxStrokeColor="@android:color/transparent"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxBackgroundColor="@color/tertiary_dark"
+        app:startIconTint="@color/gray"
+        app:startIconDrawable="@drawable/ic_search"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:textSize="16sp"
+            android:textColor="@color/gray"
+            android:padding="10dp"
+            android:inputType="textFilter"
+            android:maxLines="1"
+            android:textColorHint="@color/gray"
+            android:hint="@string/search"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

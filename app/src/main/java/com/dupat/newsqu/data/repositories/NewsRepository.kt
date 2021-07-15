@@ -15,11 +15,10 @@ import kotlinx.coroutines.flow.Flow
 
 class NewsRepository(private val apiService: ApiService, private val newsDatabase: NewsDatabase) {
 
-    //for paging without offline caching (remote mediator)
-    fun getResultPager() : Flow<PagingData<Article>>{
+    fun getSearchResult(query: String) : Flow<PagingData<Article>>{
         return Pager(
-            config = PagingConfig(pageSize = Constants.PAGE_SIZE, prefetchDistance = 5, enablePlaceholders = false),
-            pagingSourceFactory = { NewsPagingSource(apiService) }
+            config = PagingConfig(pageSize = Constants.PAGE_SIZE, maxSize = 100 ,enablePlaceholders = false),
+            pagingSourceFactory = { NewsPagingSource(apiService, query) }
         ).flow
     }
 

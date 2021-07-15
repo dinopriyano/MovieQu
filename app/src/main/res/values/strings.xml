@@ -21,4 +21,5 @@
     <string name="search_news_fragment">Search News Fragment</string>
     <string name="transition_image_article_list">transitionImageArticleList</string>
     <string name="article_image">Article Image</string>
+    <string name="search">Search...</string>
 </resources>

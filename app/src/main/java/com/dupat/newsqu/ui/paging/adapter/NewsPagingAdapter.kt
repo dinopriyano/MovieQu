@@ -28,11 +28,11 @@ class NewsPagingAdapter : PagingDataAdapter<Article, NewsPagingAdapter.ViewHolde
     companion object {
         val DIFF_UTIL = object : DiffUtil.ItemCallback<Article>() {
             override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-                return oldItem == newItem
+                return oldItem.title == newItem.title
             }
 
             override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-                return oldItem.title == newItem.title
+                return oldItem == newItem
             }
 
         }
@@ -67,6 +67,7 @@ class NewsPagingAdapter : PagingDataAdapter<Article, NewsPagingAdapter.ViewHolde
 
                 Glide.with(itemView.context)
                     .load(article?.urlToImage)
+                    .override(500, 300)
                     .centerCrop()
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(

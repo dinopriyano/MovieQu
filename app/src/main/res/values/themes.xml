@@ -15,6 +15,7 @@
         <item name="android:textViewStyle">@style/RubikTextViewStyle</item>
         <item name="android:buttonStyle">@style/RubikButtonStyle</item>
         <item name="android:windowBackground">@color/secondary_dark</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
 
     <style name="RubikTextViewStyle" parent="android:Widget.TextView">

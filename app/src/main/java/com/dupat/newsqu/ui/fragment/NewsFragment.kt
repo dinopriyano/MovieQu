@@ -31,6 +31,7 @@ import com.dupat.newsqu.ui.adapter.itemdecoration.VerticalSpaceItemDecoration
 import com.dupat.newsqu.ui.paging.adapter.NewsPagingAdapter
 import com.dupat.newsqu.ui.viewmodel.NewsViewModel
 import com.dupat.newsqu.utils.NewsClickEnum
+import com.dupat.newsqu.utils.shareNews
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -68,11 +69,7 @@ class NewsFragment : Fragment() {
                 view.findNavController().navigate(R.id.detailNewsActivity,bundle,null, extras)
             }
             else{
-                val sendIntent = Intent()
-                sendIntent.action = Intent.ACTION_SEND
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hi, i've read news at ${article?.url ?: "https://newsapi.org"}")
-                sendIntent.type = "text/plain"
-                startActivity(sendIntent)
+                requireContext().shareNews(article?.url)
             }
         }
     }
@@ -97,8 +94,8 @@ class NewsFragment : Fragment() {
     private fun loadData() {
 
         lifecycleScope.launch {
-            viewModel.getPopNews().collectLatest { pageData ->
-                newsAdapter.submitData(pageData)
+            viewModel.getPopularNews().collectLatest { pageData ->
+                newsAdapter.submitData(lifecycle, pageData)
             }
         }
 

@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.dupat.newsqu.R
 import com.dupat.newsqu.databinding.ActivityDetailNewsBinding
 import com.dupat.newsqu.ui.model.Article
+import com.dupat.newsqu.utils.shareNews
 import com.dupat.newsqu.utils.statusBarHeight
 import com.dupat.newsqu.utils.toLocalDate
 import com.dupat.newsqu.utils.toTimeDetail
@@ -36,6 +37,9 @@ class DetailNewsActivity : AppCompatActivity() {
 
         binding?.btnBack?.setOnClickListener {
             onBackPressed()
+        }
+        binding?.btnShare?.setOnClickListener{
+            shareNews(newsExtra.url)
         }
     }
 

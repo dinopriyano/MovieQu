@@ -36,8 +36,6 @@ class NewsRemoteMediator(
             }
         }
 
-
-
         return try {
             val response = networkService.getPopularNews(
                 Constants.API_KEY,

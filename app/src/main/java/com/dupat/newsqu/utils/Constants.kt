@@ -2,9 +2,10 @@ package com.dupat.newsqu.utils
 
 object Constants {
 
-    val BASE_URL = "https://newsapi.org/v2/"
-    val COUNTRY = "us"
-    val API_KEY = "eb338ecaf17c460eb6cb8113d6f34cd1"
-    val PAGE_SIZE = 10
+    const val BASE_URL = "https://newsapi.org/v2/"
+    const val COUNTRY = "us"
+    const val API_KEY = "c8273b541fed453691dd3a92f42a3959"
+    const val PAGE_SIZE = 10
+    const val DEFAULT_QUERY = "tech"
 
 }
